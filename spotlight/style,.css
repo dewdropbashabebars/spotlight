@@ -1,0 +1,266 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-body: #fcfcfc;
+  --primary-color:  #2563eb;
+  --secondary-color: #ff7675;
+  --text-color: #1f2937;
+  --border-color: #acacac8f;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --backdrop-filter: blur(10px);
+  --box-shadow: 1px 2px 15px 8px rgba(204, 204, 204, 0.4);
+  --card-hover-bg: #f0f0f0ea;
+  --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body:has(#theme-toggle:checked) {
+  --bg-body: #0f172a;
+  --primary-color: #74b9ff;
+  --secondary-color: #ff7675;
+  --text-color: #dfe6e9;
+  --border-color: rgba(255, 255, 255, 0.185);
+  --card-bg: rgba(30, 41, 59, 0.7);
+  --bg-glass: rgba(255, 255, 255, 0.03);
+  --backdrop-filter: blur(10px);
+  --box-shadow: 0 20px 25px -5px rgba(6, 9, 48, 0.9);
+  --box-shadow-inset: inset -1px 24px 15px rgba(0, 0, 0, 0.3);
+  --card-hover-bg: #081a3b;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-body);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+/* 3. زر الأيقونة التفاعلي */
+#theme-toggle {
+  display: none;
+  /* إخفاء الـ checkbox تماماً */
+}
+
+.theme-label {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  z-index: 1000;
+  color: white;
+}
+
+.theme-labe {
+  transform: rotate(15deg) scale(1.1);
+
+}
+/* أيقونات SVG */
+.icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sun-icon {
+  display: block;
+}
+
+.moon-icon {
+  display: none;
+}
+/* التحكم في ظهور الأيقونات */
+.icon-sun {
+  display: block;
+}
+
+/* التبديل بين الأيقونات عند النقر */
+body:has(#theme-toggle:checked) .sun-icon {
+  display: none;
+}
+
+body:has(#theme-toggle:checked) .moon-icon {
+  display: block;
+}
+
+body:has(#theme-toggle:checked) .theme-label {
+  background: var(--primary-color);
+}
+
+h1 {
+  /* font-size: clamp(24px, 5vw, 36px); */
+  color: var(--primary-color);
+  text-align: center;
+  margin: 40px auto;
+  font-family: system-ui, sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    text-shadow:
+      3px 3px 0 #000000,
+      6px 6px 0 #ff77c2,
+      9px 9px 0 #000;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  perspective: 1000px;
+}
+
+.card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 280px;
+  height: 320px;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  transition: var(--transition);
+  cursor: pointer;
+  background-color: var(--bg-card);
+  backdrop-filter: var(--backdrop-filter);
+  border: 1px solid var(--border-color);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 15px;
+  transition: var(--transition);
+
+}
+
+.desc {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-color);
+  /* opacity: 0.9; */
+  margin: 20px auto
+}
+
+.card:hover {
+  transform: scale(1.01) translateY(-10px);
+  background-color: var(--card-hover-bg);
+  border-bottom:2px solid var(--border-color) ;
+  box-shadow:var(--box-shadow);
+  z-index: 2;
+}
+
+.card:hover .title {
+  color: var(--secondary-color);
+}
+
+/* تأثير الـ Spotlight باستخدام :has() */
+.wrapper:has(.card:hover) .card:not(:hover) {
+  opacity: 0.9;
+  transform: scale(0.95) translateY(5px);
+  filter: blur(1px) grayscale(0.8);
+}
+@media (max-width: 768px) {
+  .wrapper { flex-direction: column; }
+}
+/* cartoon effects */
+.toon-text {
+  font-family: system-ui, sans-serif;
+  font-size: 72px;
+  font-weight: 900;
+  background: linear-gradient(45deg, var(--secondary-color), #2563eb);
+    -webkit-background-clip: text;
+    color: transparent;
+  /* text-shadow:
+    3px 3px 0 #000,
+    6px 6px 0 #ffcc00,
+    9px 9px 0 #000; */
+    text-shadow:
+        3px 3px 0 #2563eb,
+        6px 6px 0 #ffcc00,
+        9px 9px 0 #000; 
+
+}
+.toon-text span {
+  display: inline-block;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.toon-text span:nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.toon-text span:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+.toon-text span:nth-child(4) {
+  animation-delay: 0.15s;
+}
+
+.toon-text span:nth-child(5) {
+  animation-delay: 0.2s;
+}
+.toon-text span:nth-child(6) {
+  animation-delay: 0.05s;
+}
+
+.toon-text span:nth-child(7) {
+  animation-delay: 0.1s;
+}
+
+.toon-text span:nth-child(8) {
+  animation-delay: 0.15s;
+}
+
+.toon-text span:nth-child(9) {
+  animation-delay: 0.2s;
+}
+.toon-text span:nth-child(10) {
+  animation-delay: 0.5s;
+}
+.toon-text span:nth-child(11) {
+  animation-delay: 0.1s;
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(-5deg);
+  }
+}
